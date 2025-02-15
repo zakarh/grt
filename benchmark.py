@@ -5,6 +5,7 @@ NUM_NODES = 10000
 NUM_EDGES = 10000
 
 graph = GRT(directory="./database_benchmark")
+graph.clear()
 
 # 1. Create Nodes
 print("Creating Nodes...")

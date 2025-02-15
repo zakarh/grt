@@ -9,7 +9,6 @@ Using the tool.
 To run tests.
 
     pip install -r requirements-dev.txt
-
     pytest test.py
 
 To run benchmarks.

@@ -1,5 +1,5 @@
 import pytest
-from grt import GRT
+from grt_sqlite import GRT
 
 @pytest.fixture
 def graph():
@@ -78,5 +78,6 @@ def test_get_all_edges(graph):
     graph.nodes.create("node1")
     graph.nodes.create("node2")
     graph.edges.create("node1", "node2")
+    graph.edges.create("node2", "node1")
     edges = list(graph.edges.get_all())
-    assert len(edges) == 1
+    assert len(edges) == 2

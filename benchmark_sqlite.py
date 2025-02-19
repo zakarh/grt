@@ -1,5 +1,5 @@
 from tqdm import tqdm
-from grt import GRT
+from grt_sqlite import GRT
 
 NUM_NODES = 10000
 NUM_EDGES = 10000

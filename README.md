@@ -2,15 +2,15 @@
 
 Using the tool.
 
-    from grt import GRT
+    from grt_<type> import GRT
     graph = GRT()
     
 
 To run tests.
 
     pip install -r requirements-dev.txt
-    pytest test.py
+    pytest
 
 To run benchmarks.
 
-    python benchmark.py
+    python benchmark_<type>.py

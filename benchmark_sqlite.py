@@ -4,7 +4,7 @@ from grt_sqlite import GRT
 NUM_NODES = 10000
 NUM_EDGES = 10000
 
-graph = GRT(directory="./database_benchmark")
+graph = GRT(directory="./database_benchmark_sqlite")
 graph.clear()
 
 # 1. Create Nodes

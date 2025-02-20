@@ -14,7 +14,7 @@ if os.path.exists(benchmark_dir):
     shutil.rmtree(benchmark_dir)
 
 # Initialize the graph with the specified directory.
-graph = GRT(1, 1, 0, 0, directory=benchmark_dir)
+graph = GRT(directory=benchmark_dir)
 graph.clear()
 
 # 1. Create Nodes

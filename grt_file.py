@@ -1,6 +1,5 @@
 # Authors:
 # - Zakar Handricken
-
 import os
 import json
 from pathlib import Path

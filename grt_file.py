@@ -1,5 +1,5 @@
 # Authors:
-# - Zakar Handricken, ChatGPT
+# - Zakar Handricken
 
 import os
 import json

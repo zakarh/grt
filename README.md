@@ -15,7 +15,7 @@ To run benchmarks.
 
     python benchmark_<type>.py
 
-For 10,000 Nodes and 1000 edges.
+For 10,000 Nodes and 10,000 edges.
 
 |                   | File  | SQLite    | Partition   |
 |---                |---    |---        |---          |

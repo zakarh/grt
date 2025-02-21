@@ -1,17 +1,20 @@
 # grt
 
-Using the tool.
+A simple graph database system using JSON files for storage. It provides functionality to manage nodes and edges,
+making it useful for building systems that require lightweight graph-like data storage
+
+## Using the tool.
 
     from grt_<type> import GRT
     graph = GRT()
     
 
-To run tests.
+## To run tests.
 
     pip install -r requirements-dev.txt
     pytest
 
-To run benchmarks.
+## To run benchmarks.
 
     python benchmark_<type>.py
 

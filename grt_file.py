@@ -2,19 +2,18 @@
 # - Zakar Handricken
 import os
 import json
-from pathlib import Path
 
 
 class EdgeManager:
-    def __init__(self, storage_dir="edges"):
+    def __init__(self, storage_dir: str = "edges"):
         self.storage_dir = storage_dir
         os.makedirs(self.storage_dir, exist_ok=True)
         self.sep = "♥"
 
-    def _edge_path(self, src, dest):
+    def _edge_path(self, src: str, dest: str):
         return os.path.join(self.storage_dir, f"{src}{self.sep}{dest}.json")
 
-    def create(self, src, dest, properties=None):
+    def create(self, src: str, dest: str, properties=None):
         if properties is None:
             properties = {}
         edge_path = self._edge_path(src, dest)
@@ -22,25 +21,25 @@ class EdgeManager:
             with open(edge_path, "w") as f:
                 json.dump(properties, f)
 
-    def get(self, src, dest):
+    def get(self, src: str, dest: str):
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             with open(edge_path, "r") as f:
                 return json.load(f)
         return None
 
-    def update(self, src, dest, properties):
+    def update(self, src: str, dest: str, properties):
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             with open(edge_path, "w") as f:
                 json.dump(properties, f)
 
-    def delete(self, src, dest):
+    def delete(self, src: str, dest: str):
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             os.remove(edge_path)
 
-    def contains(self, src, dest):
+    def contains(self, src: str, dest: str):
         return os.path.exists(self._edge_path(src, dest))
 
     def all(self):
@@ -50,14 +49,14 @@ class EdgeManager:
             if f.endswith(".json")
         ]
 
-    def incoming(self, key):
+    def incoming(self, key: str):
         return [
             f.split(self.sep)[0]
             for f in os.listdir(self.storage_dir)
             if f.endswith(".json") and f.split(self.sep)[1].replace(".json", "") == key
         ]
 
-    def outgoing(self, key):
+    def outgoing(self, key: str):
         return [
             f.split(self.sep)[1].replace(".json", "")
             for f in os.listdir(self.storage_dir)
@@ -66,15 +65,15 @@ class EdgeManager:
 
 
 class NodeManager:
-    def __init__(self, edge_manager: EdgeManager, storage_dir="nodes"):
-        self.edges = edge_manager
-        self.storage_dir = storage_dir
+    def __init__(self, edge_manager: EdgeManager, storage_dir: str = "nodes"):
+        self.edges: EdgeManager = edge_manager
+        self.storage_dir: str = storage_dir
         os.makedirs(self.storage_dir, exist_ok=True)
 
-    def _node_path(self, key):
+    def _node_path(self, key: str):
         return os.path.join(self.storage_dir, f"{key}.json")
 
-    def create(self, key, properties=None):
+    def create(self, key: str, properties=None):
         if properties is None:
             properties = {}
         node_path = self._node_path(key)
@@ -82,20 +81,20 @@ class NodeManager:
             with open(node_path, "w") as f:
                 json.dump(properties, f)
 
-    def get(self, key):
+    def get(self, key: str):
         node_path = self._node_path(key)
         if os.path.exists(node_path):
             with open(node_path, "r") as f:
                 return json.load(f)
         return None
 
-    def update(self, key, properties):
+    def update(self, key: str, properties):
         node_path = self._node_path(key)
         if os.path.exists(node_path):
             with open(node_path, "w") as f:
                 json.dump(properties, f)
 
-    def delete(self, key):
+    def delete(self, key: str):
         node_path = self._node_path(key)
         if os.path.exists(node_path):
             os.remove(node_path)
@@ -104,7 +103,7 @@ class NodeManager:
         for outfrom in self.edges.outgoing(key):
             self.edges.delete(key, outfrom)
 
-    def contains(self, key):
+    def contains(self, key: str):
         return os.path.exists(self._node_path(key))
 
     def all(self):
@@ -121,27 +120,17 @@ class GRT(object):
         self,
         directory="./graph",
     ) -> None:
-        self.edges = EdgeManager(Path(directory).joinpath("edges"))
-        self.nodes = NodeManager(self.edges, Path(directory).joinpath("nodes"))
+        self.edges = EdgeManager(os.path.join(directory, "edges"))
+        self.nodes = NodeManager(self.edges, os.path.join(directory, "nodes"))
+
 
 if __name__ == "__main__":
     grt = GRT()
-    # Initialize Node and Edge Managers
-    # grt.edges = EdgeManager()
-    # grt.nodes = NodeManager(grt.edges)
 
     # Create nodes
-
-    # import time
-    # start = time.time()
-    # for i in range(100_000):
-    #     node_manager.create(i, {"name": "Node 1"})
-    # print("total_time:", time.time() - start)
-    # exit()
-
     grt.nodes.create("1", {"name": "Node 1"})
     grt.nodes.create("2", {"name": "Node 2"})
-    input()
+
     # Create an edge
     grt.edges.create("1", "2", {"relationship": "connected"})
 
@@ -164,10 +153,10 @@ if __name__ == "__main__":
     # Update edge
     grt.edges.update("1", "2", {"relationship": "updated connection"})
     print("Updated Edge 1->2:", grt.edges.get("1", "2"))
-    input()
-    
+
     # Delete node and edge
     grt.nodes.delete("1")
     grt.edges.delete("1", "2")
     print("Node 1 after deletion:", grt.nodes.get("1"))
     print("Edge 1->2 after deletion:", grt.edges.get("1", "2"))
+    grt.nodes.delete("2")

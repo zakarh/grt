@@ -1,5 +1,5 @@
 from tqdm import tqdm
-from grt_file import GRT
+from grt import GRT
 import os
 import shutil
 

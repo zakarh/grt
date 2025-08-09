@@ -1,5 +1,5 @@
 import pytest
-from grt_file import GRT
+from grt import GRT
 
 @pytest.fixture
 def graph(tmp_path):

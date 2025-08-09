@@ -24,7 +24,7 @@ class EdgeManager:
         if os.path.exists(edge_path):
             with open(edge_path, "r") as f:
                 return json.load(f)
-        return {}
+        return None
 
     def update(self, src: str, dest: str, properties):
         edge_path = self._edge_path(src, dest)
@@ -82,7 +82,7 @@ class NodeManager:
         if os.path.exists(node_path):
             with open(node_path, "r") as f:
                 return json.load(f)
-        return {}
+        return None
 
     def update(self, key: str, properties):
         node_path = self._node_path(key)

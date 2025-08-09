@@ -10,23 +10,21 @@ class EdgeManager:
         os.makedirs(self.storage_dir, exist_ok=True)
         self.sep = "♥"
 
-    def _edge_path(self, src: str, dest: str):
+    def _edge_path(self, src: str, dest: str) -> str:
         return os.path.join(self.storage_dir, f"{src}{self.sep}{dest}.json")
 
-    def create(self, src: str, dest: str, properties=None):
-        if properties is None:
-            properties = {}
+    def create(self, src: str, dest: str, properties: dict = {}) -> dict:
         edge_path = self._edge_path(src, dest)
         if not os.path.exists(edge_path):
             with open(edge_path, "w") as f:
                 json.dump(properties, f)
 
-    def get(self, src: str, dest: str):
+    def get(self, src: str, dest: str) -> dict:
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             with open(edge_path, "r") as f:
                 return json.load(f)
-        return None
+        return {}
 
     def update(self, src: str, dest: str, properties):
         edge_path = self._edge_path(src, dest)
@@ -39,24 +37,24 @@ class EdgeManager:
         if os.path.exists(edge_path):
             os.remove(edge_path)
 
-    def contains(self, src: str, dest: str):
+    def contains(self, src: str, dest: str) -> bool:
         return os.path.exists(self._edge_path(src, dest))
 
-    def all(self):
+    def all(self) -> list:
         return [
             tuple(f.split(".")[0].split(self.sep))
             for f in os.listdir(self.storage_dir)
             if f.endswith(".json")
         ]
 
-    def incoming(self, key: str):
+    def incoming(self, key: str) -> list:
         return [
             f.split(self.sep)[0]
             for f in os.listdir(self.storage_dir)
             if f.endswith(".json") and f.split(self.sep)[1].replace(".json", "") == key
         ]
 
-    def outgoing(self, key: str):
+    def outgoing(self, key: str) -> list:
         return [
             f.split(self.sep)[1].replace(".json", "")
             for f in os.listdir(self.storage_dir)
@@ -73,20 +71,18 @@ class NodeManager:
     def _node_path(self, key: str):
         return os.path.join(self.storage_dir, f"{key}.json")
 
-    def create(self, key: str, properties=None):
-        if properties is None:
-            properties = {}
+    def create(self, key: str, properties: dict = {}):
         node_path = self._node_path(key)
         if not os.path.exists(node_path):
             with open(node_path, "w") as f:
                 json.dump(properties, f)
 
-    def get(self, key: str):
-        node_path = self._node_path(key)
+    def get(self, key: str) -> dict:
+        node_path: str = self._node_path(key)
         if os.path.exists(node_path):
             with open(node_path, "r") as f:
                 return json.load(f)
-        return None
+        return {}
 
     def update(self, key: str, properties):
         node_path = self._node_path(key)
@@ -100,18 +96,18 @@ class NodeManager:
             os.remove(node_path)
         for into in self.edges.incoming(key):
             self.edges.delete(into, key)
-        for outfrom in self.edges.outgoing(key):
-            self.edges.delete(key, outfrom)
+        for out_from in self.edges.outgoing(key):
+            self.edges.delete(key, out_from)
 
-    def contains(self, key: str):
+    def contains(self, key: str) -> bool:
         return os.path.exists(self._node_path(key))
 
-    def all(self):
+    def all(self) -> list:
         return [
             f.split(".")[0] for f in os.listdir(self.storage_dir) if f.endswith(".json")
         ]
 
-    def keys(self):
+    def keys(self) -> list:
         return self.all()
 
 

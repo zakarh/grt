@@ -11,8 +11,8 @@ making it useful for building systems that require lightweight graph-like data s
 
 ## To run tests.
 
-    pip install -r requirements-tests.txt
-    pytest tests.py
+    pip install -r requirements-test.txt
+    pytest test.py
 
 ## To run benchmarks.
 

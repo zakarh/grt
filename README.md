@@ -23,9 +23,9 @@ For 10,000 Nodes and 10,000 edges.
 
 |                   | File  |
 |---                |---    |
-| Create Nodes      | 6s    |
-| Create Edges      | 6s    |
+| Create Nodes      | 4s    |
+| Create Edges      | 4s    |
 | Query Nodes       | 0s    |
 | Query Edges       | 0s    |
-| Updating Nodes    | 11s   |
-| Deleting Nodes    | 1m17s |
+| Updating Nodes    | 4s   |
+| Deleting Nodes    | 2m23s |

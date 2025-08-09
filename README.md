@@ -1,6 +1,6 @@
 # grt
 
-A simple graph database system using JSON files for storage. It provides functionality to manage nodes and edges,
+A simple graph database system. It provides functionality to manage nodes and edges,
 making it useful for building systems that require lightweight graph-like data storage
 
 ## Using the tool.

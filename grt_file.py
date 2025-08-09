@@ -154,9 +154,7 @@ if __name__ == "__main__":
     grt.edges.update("1", "2", {"relationship": "updated connection"})
     print("Updated Edge 1->2:", grt.edges.get("1", "2"))
 
-    # Delete node and edge
+    # Delete nodes and edges
     grt.nodes.delete("1")
     grt.edges.delete("1", "2")
-    print("Node 1 after deletion:", grt.nodes.get("1"))
-    print("Edge 1->2 after deletion:", grt.edges.get("1", "2"))
     grt.nodes.delete("2")

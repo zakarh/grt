@@ -7,14 +7,14 @@ NUM_NODES = 10000
 NUM_EDGES = 10000
 
 # Define the benchmark directory for the file-based graph database.
-benchmark_dir = "./database_benchmark_file"
+benchmark_dir: str = "./database_benchmark_file"
 
 # Clear benchmark directory if it already exists.
 if os.path.exists(benchmark_dir):
     shutil.rmtree(benchmark_dir)
 
 # Initialize the graph with the specified directory.
-graph = GRT(directory=benchmark_dir)
+graph: GRT = GRT(directory=benchmark_dir)
 
 # 1. Create Nodes
 print("Creating Nodes...")
@@ -24,17 +24,17 @@ for i in tqdm(range(NUM_NODES)):
 # 2. Create Edges
 print("Creating Edges...")
 for i in tqdm(range(NUM_EDGES)):
-    src = f"node_{i % NUM_NODES}"
-    dest = f"node_{(i + 1) % NUM_NODES}"
+    src: str = f"node_{i % NUM_NODES}"
+    dest: str = f"node_{(i + 1) % NUM_NODES}"
     graph.edges.create(src, dest, properties=f"edge_props_{i}")
 
 # 3. Query All Nodes
 print("Querying All Nodes...")
-all_nodes = graph.nodes.all()  # returns a list of node keys
+all_nodes: iter = graph.nodes.all()  # returns a list of node keys
 
 # 4. Query All Edges
 print("Querying All Edges...")
-all_edges = graph.edges.all()  # returns a list of (source, destination) tuples
+all_edges: iter = graph.edges.all()  # returns a list of (source, destination) tuples
 
 # 5. Update Nodes
 print("Updating Nodes...")

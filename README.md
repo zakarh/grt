@@ -1,4 +1,4 @@
-# grt
+# grt: Graph Representation Tool
 
 A lightweight, disk-backed graph database. It provides functionality to manage nodes and edges,
 making it useful for building systems that require lightweight graph-like data storage

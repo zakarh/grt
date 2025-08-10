@@ -23,20 +23,27 @@ For 10,000 Nodes and 10,000 edges.
 
 |                   | Time  |
 |---                |---    |
-| Create Nodes      | 7s    |
-| Create Edges      | 7s    |
+| Create Nodes      | 5s    |
+| Create Edges      | 5s    |
 | Query Nodes       | 0s    |
 | Query Edges       | 0s    |
 | Updating Nodes    | 5s    |
-| Deleting Nodes    | 3m14s |
+| Deleting Nodes    | 1m32s |
 
 For 100,000 Nodes and 100,000 edges.
 
 |                   | Time  |
 |---                |---    |
-| Create Nodes      | 1m46s |
-| Create Edges      | 1m44s |
+| Create Nodes      | 1m00s |
+| Create Edges      | 1m02s |
 | Query Nodes       | 0s    |
 | Query Edges       | 0s    |
-| Updating Nodes    | 1m02s |
-| Deleting Nodes    | ????? |
+| Updating Nodes    | 55s   |
+| Deleting Nodes    | 4h35m27s |
+
+
+### HARD DRIVE SPECS
+
+**Micron MTFDKCD512QGN-1BN1AABLA**  
+**Read speed:**	16.2 KB/s  
+**Write speed:**	1.2 MB/s  

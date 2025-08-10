@@ -39,11 +39,11 @@ For 100,000 Nodes and 100,000 edges.
 | Query Nodes       | 0s    |
 | Query Edges       | 0s    |
 | Updating Nodes    | 55s   |
-| Deleting Nodes    | 4h35m27s |
+| Deleting Nodes    | 2h18m42s |
 
 
 ### HARD DRIVE SPECS
 
 **Micron MTFDKCD512QGN-1BN1AABLA**  
-**Read speed:**	16.2 KB/s  
-**Write speed:**	1.2 MB/s  
+**Read speed:** 16.2 KB/s  
+**Write speed:** 1.2 MB/s  

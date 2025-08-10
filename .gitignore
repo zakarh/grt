@@ -163,4 +163,5 @@ cython_debug/
 
 # Other
 database_benchmark*/
+benchmark_graph/
 database_test/

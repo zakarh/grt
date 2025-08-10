@@ -30,11 +30,11 @@ for i in tqdm(range(NUM_EDGES)):
 
 # 3. Query All Nodes
 print("Querying All Nodes...")
-all_nodes: iter = graph.nodes.all()  # returns a list of node keys
+all_nodes: iter = [_ for _ in tqdm(graph.nodes.all())]
 
 # 4. Query All Edges
 print("Querying All Edges...")
-all_edges: iter = graph.edges.all()  # returns a list of (source, destination) tuples
+all_edges: iter = [_ for _ in tqdm(graph.edges.all())]
 
 # 5. Update Nodes
 print("Updating Nodes...")

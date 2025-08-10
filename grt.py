@@ -37,6 +37,16 @@ class EdgeManager:
         if os.path.exists(edge_path):
             os.remove(edge_path)
 
+    def delete_related(self, key: str):
+        for f in os.listdir(self.storage_dir):
+            if f.endswith(".json"):
+                if f[: len(f) - 5].split(self.sep)[1] == key:
+                    src = f[: len(f) - 5].split(self.sep)[0]
+                    self.delete(src, key)
+                if f[: len(f) - 5].split(self.sep)[0] == key:
+                    dest = f[: len(f) - 5].split(self.sep)[1]
+                    self.delete(key, dest)
+
     def contains(self, src: str, dest: str) -> bool:
         return os.path.exists(self._edge_path(src, dest))
 
@@ -90,10 +100,11 @@ class NodeManager:
         node_path = self._node_path(key)
         if os.path.exists(node_path):
             os.remove(node_path)
-        for into in self.edges.incoming(key):
-            self.edges.delete(into, key)
-        for out_from in self.edges.outgoing(key):
-            self.edges.delete(key, out_from)
+        self.edges.delete_related(key)
+        # for into in self.edges.incoming(key):
+        #     self.edges.delete(into, key)
+        # for out_from in self.edges.outgoing(key):
+        #     self.edges.delete(key, out_from)
 
     def contains(self, key: str) -> bool:
         return os.path.exists(self._node_path(key))

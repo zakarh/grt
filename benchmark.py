@@ -41,8 +41,8 @@ print("Updating Nodes...")
 for i in tqdm(range(NUM_NODES)):
     graph.nodes.update(key=f"node_{i}", properties=f"updated_props_{i}")
 
-# 6. Delete Nodes (which also deletes associated edges)
-print("Deleting Nodes...")
+# 6. Delete Nodes (which also deletes associated Edges)
+print("Deleting Nodes and Associated Edges...")
 for i in tqdm(range(NUM_NODES)):
     graph.nodes.delete(key=f"node_{i}")
 

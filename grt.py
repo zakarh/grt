@@ -40,26 +40,22 @@ class EdgeManager:
     def contains(self, src: str, dest: str) -> bool:
         return os.path.exists(self._edge_path(src, dest))
 
-    def all(self) -> list:
-        return [
-            tuple(f.split(".")[0].split(self.sep))
-            for f in os.listdir(self.storage_dir)
-            if f.endswith(".json")
-        ]
+    def all(self) -> iter:
+        for f in os.listdir(self.storage_dir):
+            if f.endswith(".json"):
+                yield tuple(f[: len(f) - 5].split(self.sep))
 
-    def incoming(self, key: str) -> list:
-        return [
-            f.split(self.sep)[0]
-            for f in os.listdir(self.storage_dir)
-            if f.endswith(".json") and f.split(self.sep)[1].replace(".json", "") == key
-        ]
+    def incoming(self, key: str) -> iter:
+        for f in os.listdir(self.storage_dir):
+            if f.endswith(".json"):
+                if f[: len(f) - 5].split(self.sep)[1] == key:
+                    yield f[: len(f) - 5].split(self.sep)[0]
 
-    def outgoing(self, key: str) -> list:
-        return [
-            f.split(self.sep)[1].replace(".json", "")
-            for f in os.listdir(self.storage_dir)
-            if f.endswith(".json") and f.split(self.sep)[0] == key
-        ]
+    def outgoing(self, key: str) -> iter:
+        for f in os.listdir(self.storage_dir):
+            if f.endswith(".json"):
+                if f[: len(f) - 5].split(self.sep)[0] == key:
+                    yield f[: len(f) - 5].split(self.sep)[1]
 
 
 class NodeManager:
@@ -102,10 +98,10 @@ class NodeManager:
     def contains(self, key: str) -> bool:
         return os.path.exists(self._node_path(key))
 
-    def all(self) -> list:
-        return [
-            f.split(".")[0] for f in os.listdir(self.storage_dir) if f.endswith(".json")
-        ]
+    def all(self) -> iter:
+        for f in os.listdir(self.storage_dir):
+            if f.endswith(".json"):
+                yield f[: len(f) - 5]
 
     def keys(self) -> list:
         return self.all()
@@ -132,6 +128,7 @@ if __name__ == "__main__":
 
     # Get node
     print("Node 1:", grt.nodes.get("1"))
+    print("Node All:", next(grt.nodes.all()))
 
     # Get edge
     print("Edge 1->2:", grt.edges.get("1", "2"))

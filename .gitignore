@@ -162,6 +162,5 @@ cython_debug/
 #.idea/
 
 # Other
-database_benchmark*/
-benchmark_graph/
-database_test/
+benchmark.graph/
+test.graph/

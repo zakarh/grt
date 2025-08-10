@@ -7,7 +7,7 @@ NUM_NODES = 10000
 NUM_EDGES = 10000
 
 # Define the benchmark directory for the file-based graph database.
-benchmark_dir: str = "./benchmark_graph"
+benchmark_dir: str = "./benchmark.graph"
 
 # Clear benchmark directory if it already exists.
 if os.path.exists(benchmark_dir):

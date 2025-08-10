@@ -101,10 +101,6 @@ class NodeManager:
         if os.path.exists(node_path):
             os.remove(node_path)
         self.edges.delete_related(key)
-        # for into in self.edges.incoming(key):
-        #     self.edges.delete(into, key)
-        # for out_from in self.edges.outgoing(key):
-        #     self.edges.delete(key, out_from)
 
     def contains(self, key: str) -> bool:
         return os.path.exists(self._node_path(key))

@@ -1,6 +1,8 @@
-import pytest
-from grt import GRT
 from pathlib import Path
+
+from grt import GRT
+
+import pytest
 
 
 @pytest.fixture

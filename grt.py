@@ -2,6 +2,7 @@
 # - Zakar Handricken
 import os
 import json
+from typing import Dict, Iterable
 
 
 class EdgeManager:
@@ -13,31 +14,31 @@ class EdgeManager:
     def _edge_path(self, src: str, dest: str) -> str:
         return os.path.join(self.storage_dir, f"{src}{self.sep}{dest}.json")
 
-    def create(self, src: str, dest: str, properties: dict = {}) -> dict:
+    def create(self, src: str, dest: str, properties: Dict = {}) -> None:
         edge_path = self._edge_path(src, dest)
         if not os.path.exists(edge_path):
             with open(edge_path, "w") as f:
                 json.dump(properties, f)
 
-    def get(self, src: str, dest: str) -> dict:
+    def get(self, src: str, dest: str) -> Dict | None:
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             with open(edge_path, "r") as f:
                 return json.load(f)
         return None
 
-    def update(self, src: str, dest: str, properties):
+    def update(self, src: str, dest: str, properties) -> None:
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             with open(edge_path, "w") as f:
                 json.dump(properties, f)
 
-    def delete(self, src: str, dest: str):
+    def delete(self, src: str, dest: str) -> None:
         edge_path = self._edge_path(src, dest)
         if os.path.exists(edge_path):
             os.remove(edge_path)
 
-    def delete_related(self, key: str):
+    def delete_related(self, key: str) -> None:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
                 if f[: len(f) - 5].split(self.sep)[1] == key:
@@ -50,18 +51,18 @@ class EdgeManager:
     def contains(self, src: str, dest: str) -> bool:
         return os.path.exists(self._edge_path(src, dest))
 
-    def all(self) -> iter:
+    def all(self) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
                 yield tuple(f[: len(f) - 5].split(self.sep))
 
-    def incoming(self, key: str) -> iter:
+    def incoming(self, key: str) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
                 if f[: len(f) - 5].split(self.sep)[1] == key:
                     yield f[: len(f) - 5].split(self.sep)[0]
 
-    def outgoing(self, key: str) -> iter:
+    def outgoing(self, key: str) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
                 if f[: len(f) - 5].split(self.sep)[0] == key:
@@ -74,29 +75,29 @@ class NodeManager:
         self.storage_dir: str = storage_dir
         os.makedirs(self.storage_dir, exist_ok=True)
 
-    def _node_path(self, key: str):
+    def _node_path(self, key: str) -> str:
         return os.path.join(self.storage_dir, f"{key}.json")
 
-    def create(self, key: str, properties: dict = {}):
+    def create(self, key: str, properties: Dict = {}) -> None:
         node_path = self._node_path(key)
         if not os.path.exists(node_path):
             with open(node_path, "w") as f:
                 json.dump(properties, f)
 
-    def get(self, key: str) -> dict:
+    def get(self, key: str) -> Dict | None:
         node_path: str = self._node_path(key)
         if os.path.exists(node_path):
             with open(node_path, "r") as f:
                 return json.load(f)
         return None
 
-    def update(self, key: str, properties):
+    def update(self, key: str, properties) -> None:
         node_path = self._node_path(key)
         if os.path.exists(node_path):
             with open(node_path, "w") as f:
                 json.dump(properties, f)
 
-    def delete(self, key: str):
+    def delete(self, key: str) -> None:
         node_path = self._node_path(key)
         if os.path.exists(node_path):
             os.remove(node_path)
@@ -105,12 +106,12 @@ class NodeManager:
     def contains(self, key: str) -> bool:
         return os.path.exists(self._node_path(key))
 
-    def all(self) -> iter:
+    def all(self) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
                 yield f[: len(f) - 5]
 
-    def keys(self) -> list:
+    def keys(self) -> Iterable:
         return self.all()
 
 

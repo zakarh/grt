@@ -2,7 +2,10 @@
 # - Zakar Handricken
 import os
 import json
+
+from pathlib import Path
 from typing import Dict, Iterable
+
 
 
 class EdgeManager:
@@ -41,11 +44,11 @@ class EdgeManager:
     def delete_related(self, key: str) -> None:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
-                if f[: len(f) - 5].split(self.sep)[1] == key:
-                    src = f[: len(f) - 5].split(self.sep)[0]
+                if str(Path(f).with_suffix("")).split(self.sep)[1] == key:
+                    src = str(Path(f).with_suffix("")).split(self.sep)[0]
                     self.delete(src, key)
-                if f[: len(f) - 5].split(self.sep)[0] == key:
-                    dest = f[: len(f) - 5].split(self.sep)[1]
+                if str(Path(f).with_suffix("")).split(self.sep)[0] == key:
+                    dest = str(Path(f).with_suffix("")).split(self.sep)[1]
                     self.delete(key, dest)
 
     def contains(self, src: str, dest: str) -> bool:
@@ -54,19 +57,19 @@ class EdgeManager:
     def all(self) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
-                yield tuple(f[: len(f) - 5].split(self.sep))
+                yield tuple(str(Path(f).with_suffix("")).split(self.sep))
 
     def incoming(self, key: str) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
-                if f[: len(f) - 5].split(self.sep)[1] == key:
-                    yield f[: len(f) - 5].split(self.sep)[0]
+                if str(Path(f).with_suffix("")).split(self.sep)[1] == key:
+                    yield str(Path(f).with_suffix("")).split(self.sep)[0]
 
     def outgoing(self, key: str) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
-                if f[: len(f) - 5].split(self.sep)[0] == key:
-                    yield f[: len(f) - 5].split(self.sep)[1]
+                if str(Path(f).with_suffix("")).split(self.sep)[0] == key:
+                    yield str(Path(f).with_suffix("")).split(self.sep)[1]
 
 
 class NodeManager:
@@ -109,7 +112,7 @@ class NodeManager:
     def all(self) -> Iterable:
         for f in os.listdir(self.storage_dir):
             if f.endswith(".json"):
-                yield f[: len(f) - 5]
+                yield str(Path(f).with_suffix(""))
 
     def keys(self) -> Iterable:
         return self.all()

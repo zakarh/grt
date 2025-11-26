@@ -23,6 +23,12 @@ def test_create_node(graph: GRT):
     node = graph.nodes.get("node1")
     assert node == {"property": "value"}
 
+def test_create_node_name(graph: GRT):
+    graph.nodes.create("node1.json", {"property": "value"})
+    # Check that the node file exists and its content is correct.
+    assert graph.nodes.contains("node1.json")
+    node = graph.nodes.get("node1.json")
+    assert node == {"property": "value"}
 
 # Test Node Retrieval
 def test_get_node(graph: GRT):
